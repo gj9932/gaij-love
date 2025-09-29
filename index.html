@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>永远的爱</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: '微软雅黑', sans-serif;
+            background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* 爱心样式 */
+        .heart {
+            width: 100px;
+            height: 90px;
+            position: relative;
+            transform: rotate(-45deg);
+            animation: heartbeat 1.5s ease-in-out infinite;
+            opacity: 0;
+            animation-delay: 0.5s;
+            animation-fill-mode: forwards;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: '';
+            width: 52px;
+            height: 80px;
+            position: absolute;
+            left: 50px;
+            top: 0;
+            background: #ff6b6b;
+            border-radius: 50px 50px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: rotate(-45deg) scale(0);
+                opacity: 0;
+            }
+            15% {
+                transform: rotate(-45deg) scale(1.2);
+                opacity: 1;
+            }
+            30% {
+                transform: rotate(-45deg) scale(1);
+            }
+            50% {
+                transform: rotate(-45deg) scale(1.1);
+            }
+            70% {
+                transform: rotate(-45deg) scale(1);
+            }
+            100% {
+                transform: rotate(-45deg) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* 文字样式 */
+        .love-text {
+            font-size: 2.5rem;
+            color: #d63384;
+            text-align: center;
+            margin: 40px 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 2s ease-out 3s forwards;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            line-height: 1.2;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 拥抱动画容器 */
+        .embrace-container {
+            opacity: 0;
+            animation: fadeIn 2s ease-out 5.5s forwards;
+            margin-top: 30px;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* SVG拥抱动画 */
+        .embrace-svg {
+            width: 200px;
+            height: 200px;
+        }
+
+        .couple-figure {
+            animation: sway 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes sway {
+            0% {
+                transform: translateX(0) rotate(0deg);
+            }
+            100% {
+                transform: translateX(2px) rotate(1deg);
+            }
+        }
+
+        /* 漂浮的小爱心 */
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .mini-heart {
+            position: absolute;
+            width: 20px;
+            height: 18px;
+            transform: rotate(-45deg);
+            animation: float 8s linear infinite;
+            opacity: 0;
+        }
+
+        .mini-heart:before,
+        .mini-heart:after {
+            content: '';
+            width: 10px;
+            height: 16px;
+            position: absolute;
+            left: 10px;
+            top: 0;
+            background: rgba(255, 107, 107, 0.6);
+            border-radius: 10px 10px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .mini-heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(-45deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(-45deg) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(-10vh) rotate(-45deg) scale(1);
+            }
+            100% {
+                transform: translateY(-20vh) rotate(-45deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            .heart {
+                width: 80px;
+                height: 72px;
+            }
+            
+            .heart:before,
+            .heart:after {
+                width: 42px;
+                height: 64px;
+                left: 40px;
+            }
+            
+            .heart:after {
+                left: 0;
+            }
+            
+            .love-text {
+                font-size: 2rem;
+                margin: 30px 15px;
+            }
+            
+            .embrace-svg {
+                width: 160px;
+                height: 160px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .love-text {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 漂浮的小爱心背景 -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- 主要爱心 -->
+    <div class="heart"></div>
+
+    <!-- 爱的宣言文字 -->
+    <div class="love-text">
+        姜欣彤<br>我永远爱你
+    </div>
+
+    <!-- 拥抱的SVG动画 -->
+    <div class="embrace-container">
+        <svg class="embrace-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <!-- 渐变定义 -->
+                <linearGradient id="skinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#fdbcb4"/>
+                    <stop offset="100%" style="stop-color:#f4a3a8"/>
+                </linearGradient>
+                <linearGradient id="hairGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#8b4513"/>
+                    <stop offset="100%" style="stop-color:#654321"/>
+                </linearGradient>
+            </defs>
+            
+            <g class="couple-figure">
+                <!-- 男生 -->
+                <g transform="translate(50, 60)">
+                    <!-- 头部 -->
+                    <circle cx="0" cy="0" r="25" fill="url(#skinGradient)"/>
+                    <!-- 头发 -->
+                    <path d="M -20,-15 Q 0,-35 20,-15 Q 15,-25 0,-30 Q -15,-25 -20,-15" fill="url(#hairGradient)"/>
+                    <!-- 眼睛 -->
+                    <circle cx="-8" cy="-5" r="2" fill="#333"/>
+                    <circle cx="8" cy="-5" r="2" fill="#333"/>
+                    <!-- 嘴巴 -->
+                    <path d="M -5,8 Q 0,12 5,8" stroke="#333" stroke-width="1" fill="none"/>
+                    <!-- 身体 -->
+                    <ellipse cx="0" cy="45" rx="20" ry="30" fill="#4a90e2"/>
+                    <!-- 手臂（拥抱姿势） -->
+                    <ellipse cx="-25" cy="35" rx="8" ry="20" fill="url(#skinGradient)" transform="rotate(-30)"/>
+                    <ellipse cx="25" cy="35" rx="8" ry="20" fill="url(#skinGradient)" transform="rotate(30)"/>
+                </g>
+                
+                <!-- 女生 -->
+                <g transform="translate(120, 60)">
+                    <!-- 头部 -->
+                    <circle cx="0" cy="0" r="22" fill="url(#skinGradient)"/>
+                    <!-- 头发（长发） -->
+                    <path d="M -18,-12 Q -25,-20 -20,-35 Q 0,-40 20,-35 Q 25,-20 18,-12 Q 20,5 15,15 Q 0,10 -15,15 Q -20,5 -18,-12" fill="#d4af37"/>
+                    <!-- 眼睛 -->
+                    <circle cx="-6" cy="-3" r="2" fill="#333"/>
+                    <circle cx="6" cy="-3" r="2" fill="#333"/>
+                    <!-- 睫毛 -->
+                    <path d="M -6,-7 L -6,-9 M 6,-7 L 6,-9" stroke="#333" stroke-width="1"/>
+                    <!-- 嘴巴（微笑） -->
+                    <path d="M -4,6 Q 0,10 4,6" stroke="#333" stroke-width="1" fill="none"/>
+                    <!-- 身体 -->
+                    <ellipse cx="0" cy="42" rx="18" ry="28" fill="#ff69b4"/>
+                    <!-- 手臂（拥抱姿势） -->
+                    <ellipse cx="-20" cy="32" rx="7" ry="18" fill="url(#skinGradient)" transform="rotate(-20)"/>
+                    <ellipse cx="20" cy="32" rx="7" ry="18" fill="url(#skinGradient)" transform="rotate(20)"/>
+                </g>
+                
+                <!-- 爱心在两人之间 -->
+                <g transform="translate(85, 50)">
+                    <g transform="scale(0.3)">
+                        <path d="M12,21.35l-1.45-1.32C5.4,15.36,2,12.28,2,8.5 C2,5.42,4.42,3,7.5,3c1.74,0,3.41,0.81,4.5,2.09C13.09,3.81,14.76,3,16.5,3 C19.58,3,22,5.42,22,8.5c0,3.78-3.4,6.86-8.55,11.54L12,21.35z" fill="#ff6b6b">
+                            <animateTransform attributeName="transform" type="scale" values="1;1.2;1" dur="2s" repeatCount="indefinite"/>
+                        </path>
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </div>
+
+    <script>
+        // 创建漂浮的小爱心
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'mini-heart';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                
+                container.appendChild(heart);
+                
+                // 8秒后移除元素
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.parentNode.removeChild(heart);
+                    }
+                }, 8000);
+            }, 1000);
+        }
+
+        // 页面加载完成后开始动画
+        window.addEventListener('load', () => {
+            // 延迟开始漂浮爱心动画
+            setTimeout(createFloatingHearts, 2000);
+        });
+
+        // 防止页面缩放
+        document.addEventListener('touchstart', function (event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
+</body>
+</html> 
