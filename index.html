@@ -236,6 +236,7 @@
             }
         }
     </style>
+    <link rel="preload" as="image" href="couple_720q60.jpg" imagesrcset="couple_720q60.jpg 720w, couple_1080q60.jpg 1080w" imagesizes="(max-width: 480px) 80vw, 420px">
 </head>
 <body>
     <!-- 漂浮的小爱心背景 -->
@@ -251,8 +252,19 @@
 
     <!-- 拥抱的SVG动画 -->
     <div class="embrace-container">
-        <!-- 使用用户提供的情侣照片替换原SVG。请将图片放在同目录，命名为couple.jpg -->
-        <img src="couple.jpg" alt="我们牵手" class="couple-photo" />
+        <!-- 使用多尺寸加速加载 -->
+        <picture>
+            <img
+                src="couple_720q60.jpg"
+                srcset="couple_720q60.jpg 720w, couple_1080q60.jpg 1080w"
+                sizes="(max-width: 480px) 80vw, 420px"
+                alt="我们牵手"
+                class="couple-photo"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+            />
+        </picture>
     </div>
 
     <script>
